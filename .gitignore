@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+.env.local
+dist/
+output/
+*.log
+.DS_Store
+output/
+.vscode/

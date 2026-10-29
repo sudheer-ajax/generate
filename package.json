@@ -1,0 +1,35 @@
+{
+  "name": "ncino-services",
+  "version": "1.0.0",
+  "description": "nCino (Salesforce) integration — loan document APIs and CLI; Mambu client for future use",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/server.ts",
+    "server": "tsx src/server.ts",
+    "describe": "tsx src/cli/describe-ncino.ts",
+    "test:auth": "tsx src/cli/test-connections.ts",
+    "docs:list": "tsx src/cli/loan-documents-cli.ts list",
+    "docs:download": "tsx src/cli/loan-documents-cli.ts download",
+    "docs:batch": "tsx src/cli/docs-batch-export.ts",
+    "trunarrative:batch": "tsx src/cli/trunarrative-batch.ts",
+    "collateral:batch": "tsx src/cli/collateral-batch.ts",
+    "legacy:boe-preview": "tsx src/cli/boe-preview.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.700.0",
+    "dotenv": "^16.4.5",
+    "jsforce": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

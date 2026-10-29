@@ -1,0 +1,1713 @@
+{
+  "meta": {
+    "template": "Bank of England Loan Level Data: Reporting Template for Residential Mortgages (updated April 2024)",
+    "field_count": 211,
+    "blank_placeholders_excluded": true,
+    "assumption": "nCino = origination (Salesforce REST + SOQL); Mambu = servicing ledger (API v2)",
+    "join_key": "Mambu loans.id <-> nCino LLC_BI__Loan__c.Name stored in a Mambu custom field",
+    "file_format_rules": "Single worksheet, column headings as per template, dates DD-MM-YYYY (see template guidance)",
+    "verify": "nCino field names marked low/medium are org-specific; confirm with describe calls. Mambu custom fields are assumed and must be created.",
+    "count_by_source": {
+      "Constant/Config": 6,
+      "Mambu": 47,
+      "nCino": 109,
+      "Calculated": 12,
+      "Not applicable / No data": 37
+    },
+    "count_by_confidence": {
+      "high": 53,
+      "low": 111,
+      "medium": 47
+    }
+  },
+  "fields": [
+    {
+      "boe_field_id": "AR1",
+      "boe_field_name": "AR1",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR2",
+      "boe_field_name": "AR2",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR3",
+      "boe_field_name": "AR3",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR4",
+      "boe_field_name": "AR4",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR5",
+      "boe_field_name": "AR5",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR6",
+      "boe_field_name": "AR6",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR7",
+      "boe_field_name": "AR7",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR8",
+      "boe_field_name": "AR8",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR15",
+      "boe_field_name": "AR15",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR16",
+      "boe_field_name": "AR16",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR17",
+      "boe_field_name": "AR17",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR18",
+      "boe_field_name": "AR18",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR19",
+      "boe_field_name": "AR19",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR20",
+      "boe_field_name": "AR20",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR21",
+      "boe_field_name": "AR21",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR22",
+      "boe_field_name": "AR22",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR23",
+      "boe_field_name": "AR23",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR24",
+      "boe_field_name": "AR24",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR25",
+      "boe_field_name": "AR25",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR26",
+      "boe_field_name": "AR26",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR27",
+      "boe_field_name": "AR27",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR28",
+      "boe_field_name": "AR28",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR29",
+      "boe_field_name": "AR29",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR30",
+      "boe_field_name": "AR30",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR31",
+      "boe_field_name": "AR31",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR32",
+      "boe_field_name": "AR32",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR33",
+      "boe_field_name": "AR33",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR34",
+      "boe_field_name": "AR34",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR35",
+      "boe_field_name": "AR35",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR36",
+      "boe_field_name": "AR36",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR37",
+      "boe_field_name": "AR37",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR38",
+      "boe_field_name": "AR38",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR39",
+      "boe_field_name": "AR39",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR40",
+      "boe_field_name": "AR40",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR41",
+      "boe_field_name": "AR41",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR42",
+      "boe_field_name": "AR42",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR43",
+      "boe_field_name": "AR43",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR44",
+      "boe_field_name": "AR44",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR45",
+      "boe_field_name": "AR45",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR46",
+      "boe_field_name": "AR46",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR47",
+      "boe_field_name": "AR47",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR48",
+      "boe_field_name": "AR48",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR49",
+      "boe_field_name": "AR49",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR50",
+      "boe_field_name": "AR50",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR55",
+      "boe_field_name": "AR55",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR56",
+      "boe_field_name": "AR56",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR57",
+      "boe_field_name": "AR57",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR58",
+      "boe_field_name": "AR58",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR59",
+      "boe_field_name": "AR59",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR60",
+      "boe_field_name": "AR60",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR61",
+      "boe_field_name": "AR61",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR62",
+      "boe_field_name": "AR62",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR63",
+      "boe_field_name": "AR63",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR64",
+      "boe_field_name": "AR64",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR65",
+      "boe_field_name": "AR65",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR66",
+      "boe_field_name": "AR66",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR67",
+      "boe_field_name": "AR67",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR68",
+      "boe_field_name": "AR68",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR69",
+      "boe_field_name": "AR69",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR70",
+      "boe_field_name": "AR70",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR71",
+      "boe_field_name": "AR71",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR72",
+      "boe_field_name": "AR72",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR73",
+      "boe_field_name": "AR73",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR74",
+      "boe_field_name": "AR74",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR75",
+      "boe_field_name": "AR75",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR76",
+      "boe_field_name": "AR76",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR77",
+      "boe_field_name": "AR77",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR78",
+      "boe_field_name": "AR78",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR79",
+      "boe_field_name": "AR79",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR80",
+      "boe_field_name": "AR80",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR81",
+      "boe_field_name": "AR81",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR82",
+      "boe_field_name": "AR82",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR83",
+      "boe_field_name": "AR83",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR84",
+      "boe_field_name": "AR84",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR85",
+      "boe_field_name": "AR85",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR86",
+      "boe_field_name": "AR86",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR87",
+      "boe_field_name": "AR87",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR88",
+      "boe_field_name": "AR88",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR89",
+      "boe_field_name": "AR89",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR90",
+      "boe_field_name": "AR90",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR91",
+      "boe_field_name": "AR91",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR92",
+      "boe_field_name": "AR92",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR93",
+      "boe_field_name": "AR93",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR94",
+      "boe_field_name": "AR94",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR95",
+      "boe_field_name": "AR95",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR96",
+      "boe_field_name": "AR96",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR97",
+      "boe_field_name": "AR97",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR98",
+      "boe_field_name": "AR98",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR99",
+      "boe_field_name": "AR99",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR100",
+      "boe_field_name": "AR100",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR101",
+      "boe_field_name": "AR101",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR102",
+      "boe_field_name": "AR102",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR103",
+      "boe_field_name": "AR103",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR104",
+      "boe_field_name": "AR104",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR105",
+      "boe_field_name": "AR105",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR107",
+      "boe_field_name": "AR107",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR108",
+      "boe_field_name": "AR108",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR109",
+      "boe_field_name": "AR109",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR110",
+      "boe_field_name": "AR110",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR111",
+      "boe_field_name": "AR111",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR112",
+      "boe_field_name": "AR112",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR113",
+      "boe_field_name": "AR113",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR114",
+      "boe_field_name": "AR114",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR115",
+      "boe_field_name": "AR115",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR116",
+      "boe_field_name": "AR116",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR117",
+      "boe_field_name": "AR117",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR118",
+      "boe_field_name": "AR118",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR119",
+      "boe_field_name": "AR119",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR120",
+      "boe_field_name": "AR120",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR121",
+      "boe_field_name": "AR121",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR122",
+      "boe_field_name": "AR122",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR123",
+      "boe_field_name": "AR123",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR128",
+      "boe_field_name": "AR128",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR129",
+      "boe_field_name": "AR129",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR130",
+      "boe_field_name": "AR130",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR131",
+      "boe_field_name": "AR131",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR132",
+      "boe_field_name": "AR132",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR133",
+      "boe_field_name": "AR133",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR134",
+      "boe_field_name": "AR134",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR135",
+      "boe_field_name": "AR135",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR136",
+      "boe_field_name": "AR136",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR137",
+      "boe_field_name": "AR137",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR138",
+      "boe_field_name": "AR138",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR139",
+      "boe_field_name": "AR139",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR140",
+      "boe_field_name": "AR140",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR141",
+      "boe_field_name": "AR141",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR142",
+      "boe_field_name": "AR142",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR143",
+      "boe_field_name": "AR143",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR144",
+      "boe_field_name": "AR144",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR145",
+      "boe_field_name": "AR145",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR146",
+      "boe_field_name": "AR146",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR147",
+      "boe_field_name": "AR147",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR148",
+      "boe_field_name": "AR148",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR149",
+      "boe_field_name": "AR149",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR150",
+      "boe_field_name": "AR150",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR151",
+      "boe_field_name": "AR151",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR152",
+      "boe_field_name": "AR152",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR153",
+      "boe_field_name": "AR153",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR154",
+      "boe_field_name": "AR154",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR155",
+      "boe_field_name": "AR155",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR156",
+      "boe_field_name": "AR156",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR157",
+      "boe_field_name": "AR157",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR158",
+      "boe_field_name": "AR158",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR159",
+      "boe_field_name": "AR159",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR160",
+      "boe_field_name": "AR160",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR162",
+      "boe_field_name": "AR162",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR163",
+      "boe_field_name": "AR163",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR164",
+      "boe_field_name": "AR164",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR166",
+      "boe_field_name": "AR166",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR167",
+      "boe_field_name": "AR167",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR168",
+      "boe_field_name": "AR168",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR169",
+      "boe_field_name": "AR169",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR170",
+      "boe_field_name": "AR170",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR171",
+      "boe_field_name": "AR171",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR172",
+      "boe_field_name": "AR172",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR173",
+      "boe_field_name": "AR173",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR174",
+      "boe_field_name": "AR174",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR175",
+      "boe_field_name": "AR175",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR176",
+      "boe_field_name": "AR176",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR177",
+      "boe_field_name": "AR177",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR178",
+      "boe_field_name": "AR178",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR179",
+      "boe_field_name": "AR179",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR180",
+      "boe_field_name": "AR180",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR181",
+      "boe_field_name": "AR181",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR182",
+      "boe_field_name": "AR182",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR183",
+      "boe_field_name": "AR183",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR189",
+      "boe_field_name": "AR189",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR190",
+      "boe_field_name": "AR190",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR191",
+      "boe_field_name": "AR191",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR192",
+      "boe_field_name": "AR192",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR193",
+      "boe_field_name": "AR193",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR194",
+      "boe_field_name": "AR194",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR195",
+      "boe_field_name": "AR195",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR196",
+      "boe_field_name": "AR196",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR197",
+      "boe_field_name": "AR197",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR198",
+      "boe_field_name": "AR198",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR199",
+      "boe_field_name": "AR199",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR200",
+      "boe_field_name": "AR200",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR201",
+      "boe_field_name": "AR201",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR202",
+      "boe_field_name": "AR202",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR203",
+      "boe_field_name": "AR203",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR204",
+      "boe_field_name": "AR204",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR205",
+      "boe_field_name": "AR205",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR206",
+      "boe_field_name": "AR206",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR207",
+      "boe_field_name": "AR207",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR208",
+      "boe_field_name": "AR208",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR209",
+      "boe_field_name": "AR209",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR210",
+      "boe_field_name": "AR210",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR211",
+      "boe_field_name": "AR211",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR213",
+      "boe_field_name": "AR213",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR214",
+      "boe_field_name": "AR214",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR215",
+      "boe_field_name": "AR215",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR216",
+      "boe_field_name": "AR216",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR217",
+      "boe_field_name": "AR217",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR218",
+      "boe_field_name": "AR218",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR220",
+      "boe_field_name": "AR220",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR221",
+      "boe_field_name": "AR221",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR222",
+      "boe_field_name": "AR222",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR223",
+      "boe_field_name": "AR223",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR224",
+      "boe_field_name": "AR224",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR225",
+      "boe_field_name": "AR225",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR226",
+      "boe_field_name": "AR226",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR227",
+      "boe_field_name": "AR227",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR228",
+      "boe_field_name": "AR228",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR230",
+      "boe_field_name": "AR230",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR231",
+      "boe_field_name": "AR231",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR232",
+      "boe_field_name": "AR232",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR233",
+      "boe_field_name": "AR233",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR234",
+      "boe_field_name": "AR234",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR235",
+      "boe_field_name": "AR235",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    },
+    {
+      "boe_field_id": "AR236",
+      "boe_field_name": "AR236",
+      "mapping": {
+        "source_system": "TBD",
+        "confidence": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "batchSize": 20,
+  "allowedFileExtensions": ["pdf"],
+  "exportTargets": [
+    {
+      "label": "CIF",
+      "matchNames": ["CIF"],
+      "matchPatterns": ["^CIF\\s*\\([^)]+\\)$"]
+    },
+    {
+      "label": "SALIE",
+      "matchNames": ["SALIE", "Salie"],
+      "matchPatterns": ["\\bSALIE\\b", "\\bSalie\\b"]
+    },
+    {
+      "label": "Valuation_Report",
+      "matchNames": ["Valuation Report"]
+    },
+    {
+      "label": "Credit_Memo",
+      "matchNames": ["Credit Memo"]
+    }
+  ],
+  "excludeNamePatterns": [],
+  "collateralExport": {
+    "residentialOnly": true,
+    "collateralTypeIncludes": "Residential",
+    "requireAddress": true
+  },
+  "_comment": "collateralExport: npm run collateral:batch — lien rows only for residential collateral types with a real address (LLC_BI__Full_Address__c)."
+}

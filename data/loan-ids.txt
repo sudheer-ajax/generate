@@ -1,0 +1,9 @@
+# nCino loan references — one per line (Salesforce Id or loan Name).
+# Lines starting with # are ignored. Replace with your full list (~300 loans).
+
+a0i4K0000072cbaQAA
+a0iTl000000w8ObIAI
+
+# Add more Ids or names below, e.g.:
+# LN-00012345
+# a0iXXXXXXXXXXXXXXX
