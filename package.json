@@ -16,6 +16,7 @@
     "docs:batch": "tsx src/cli/docs-batch-export.ts",
     "trunarrative:batch": "tsx src/cli/trunarrative-batch.ts",
     "collateral:batch": "tsx src/cli/collateral-batch.ts",
+    "loans:existence": "tsx src/cli/loan-existence-check.ts",
     "legacy:boe-preview": "tsx src/cli/boe-preview.ts",
     "typecheck": "tsc --noEmit"
   },

@@ -125,6 +125,8 @@ export async function connectNcino(): Promise<NcinoConnectResult> {
             msg,
             'Check SF_USERNAME, SF_PASSWORD, and SF_SECURITY_TOKEN (reset token in org if password changed).',
             'Quote SF_PASSWORD in .env if it contains special characters, e.g. SF_PASSWORD="yourPassword".',
+            'If you can log in via `sf org login web` but SOAP still fails, the security token is often stale—reset it in the org and update .env.',
+            'Or use SF_AUTH_MODE=token with SF_ACCESS_TOKEN + SF_INSTANCE_URL from `sf org auth show-access-token`.',
           ].join(' '),
         );
       }

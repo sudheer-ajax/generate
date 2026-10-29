@@ -38,9 +38,21 @@ npm run test:auth              # Salesforce (+ Mambu if configured)
 npm run docs:list -- <loanIdOrName> [--filter=text] [--all]
 npm run docs:download -- <loanIdOrName> <documentId> [--out=path] [--content-version=068...]
 npm run describe               # Sample field describe for core nCino objects
+npm run loans:existence        # CSV: which loan ids/names exist in the connected org (e.g. prod list vs backup)
 ```
 
 `docs:list` shows only documents with files by default; `--all` includes empty placeholders.
+
+### Prod loan list vs backup org
+
+Point `.env` at your **backup** sandbox, put **prod** `LLC_BI__Loan__c` Ids (or loan Names) in `data/loan-ids.txt`, then:
+
+```bash
+npm run loans:existence
+# optional: npm run loans:existence -- --out=output/loan-existence/report.csv
+```
+
+CSV columns: `index`, `inputRef`, `inputKind`, `existsInOrg` (`yes`/`no`), `loanId`, `loanName`. Console prints found/missing counts. Full sandbox copies usually keep the same record Ids as prod.
 
 ### Batch export (many loans → local folder + optional S3)
 
