@@ -69,7 +69,7 @@ npm run docs:batch -- 1 --local-only    # skip S3 even if bucket is set
 
 ### TruNarrative references (CSV by batch)
 
-Same `data/loan-ids.txt` and batch size as document export. One row per **legal entity** on each loan; TruNarrative id from `Account.TruNarrative_Account_Reference__c`.
+Same `data/loan-ids.txt` and batch size as document export. One row per **legal entity** on each loan. CSV includes `relationshipType` from **`Account.Type`** (Relationship Type in the UI) and TruNarrative id from `Account.TruNarrative_Account_Reference__c`.
 
 ```bash
 npm run trunarrative:batch -- --list

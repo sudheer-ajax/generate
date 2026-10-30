@@ -16,7 +16,8 @@ Usage:
 Reads loan ids from ${config.export.loanIdsFile} (same batches as docs:batch).
 Writes CSV: output/trunarrative/batch-NNN/trunarrative-batch-NNN.csv
 
-Columns: Id, loanId, loanName, legalEntityId, accountId, accountName, borrowerType, truNarrativeAccountReference
+Columns: Id, loanId, loanName, legalEntityId, accountId, accountName, borrowerType, relationshipType, truNarrativeAccountReference
+relationshipType = Account.Type (UI: Relationship Type)
 Field: Account.${'TruNarrative_Account_Reference__c'} (UI: TruNarrative Account Reference)
 `);
   process.exit(1);

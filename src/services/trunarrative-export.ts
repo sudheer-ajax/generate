@@ -18,6 +18,7 @@ interface LegalEntityWithAccountRow {
   LLC_BI__Account__r?: {
     Id?: string;
     Name?: string;
+    Type?: string;
     TruNarrative_Account_Reference__c?: string;
   };
   [key: string]: unknown;
@@ -38,6 +39,7 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
     'accountId',
     'accountName',
     'borrowerType',
+    'relationshipType',
     'truNarrativeAccountReference',
   ];
   const lines = [header.join(',')];
@@ -51,6 +53,7 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
         escapeCsv(r.accountId),
         escapeCsv(r.accountName),
         escapeCsv(r.borrowerType),
+        escapeCsv(r.relationshipType),
         escapeCsv(r.truNarrativeAccountReference),
       ].join(','),
     );
@@ -67,7 +70,7 @@ async function fetchRelationshipsForLoanIds(
   const idList = loanIds.map((id) => `'${id}'`).join(',');
   const soql = `
     SELECT Id, LLC_BI__Loan__c, LLC_BI__Account__c, LLC_BI__Borrower_Type__c,
-           LLC_BI__Account__r.Id, LLC_BI__Account__r.Name,
+           LLC_BI__Account__r.Id, LLC_BI__Account__r.Name, LLC_BI__Account__r.Type,
            LLC_BI__Account__r.${TRU_NARRATIVE_ACCOUNT_FIELD}
     FROM LLC_BI__Legal_Entities__c
     WHERE LLC_BI__Loan__c IN (${idList})
@@ -91,6 +94,7 @@ async function fetchRelationshipsForLoanIds(
       accountId,
       accountName: e.LLC_BI__Account__r?.Name ?? null,
       borrowerType: e.LLC_BI__Borrower_Type__c ?? null,
+      relationshipType: e.LLC_BI__Account__r?.Type ?? null,
       truNarrativeAccountReference:
         (e.LLC_BI__Account__r?.TruNarrative_Account_Reference__c as string | undefined) ?? null,
     });
