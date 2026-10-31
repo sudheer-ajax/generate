@@ -9,5 +9,7 @@ export interface TruNarrativeRelationshipRow {
   borrowerType: string | null;
   /** Account.Type — UI label Relationship Type (e.g. Individual, Limited Liability Company). */
   relationshipType: string | null;
+  /** Account.Relationship_ID__c */
+  relationshipId: string | null;
   truNarrativeAccountReference: string | null;
 }

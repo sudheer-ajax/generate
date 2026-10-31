@@ -9,6 +9,8 @@ import { batchLabel } from './loan-id-batches.js';
 
 /** Account custom field (UI: TruNarrative Account Reference). */
 export const TRU_NARRATIVE_ACCOUNT_FIELD = 'TruNarrative_Account_Reference__c';
+/** Account custom field (UI: Relationship ID). */
+export const RELATIONSHIP_ID_FIELD = 'Relationship_ID__c';
 
 interface LegalEntityWithAccountRow {
   Id: string;
@@ -20,6 +22,7 @@ interface LegalEntityWithAccountRow {
     Name?: string;
     Type?: string;
     TruNarrative_Account_Reference__c?: string;
+    Relationship_ID__c?: string;
   };
   [key: string]: unknown;
 }
@@ -40,6 +43,7 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
     'accountName',
     'borrowerType',
     'relationshipType',
+    'relationshipId',
     'truNarrativeAccountReference',
   ];
   const lines = [header.join(',')];
@@ -54,6 +58,7 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
         escapeCsv(r.accountName),
         escapeCsv(r.borrowerType),
         escapeCsv(r.relationshipType),
+        escapeCsv(r.relationshipId),
         escapeCsv(r.truNarrativeAccountReference),
       ].join(','),
     );
@@ -71,7 +76,8 @@ async function fetchRelationshipsForLoanIds(
   const soql = `
     SELECT Id, LLC_BI__Loan__c, LLC_BI__Account__c, LLC_BI__Borrower_Type__c,
            LLC_BI__Account__r.Id, LLC_BI__Account__r.Name, LLC_BI__Account__r.Type,
-           LLC_BI__Account__r.${TRU_NARRATIVE_ACCOUNT_FIELD}
+           LLC_BI__Account__r.${TRU_NARRATIVE_ACCOUNT_FIELD},
+           LLC_BI__Account__r.${RELATIONSHIP_ID_FIELD}
     FROM LLC_BI__Legal_Entities__c
     WHERE LLC_BI__Loan__c IN (${idList})
     ORDER BY LLC_BI__Loan__c, LLC_BI__Borrower_Type__c, Id
@@ -95,6 +101,8 @@ async function fetchRelationshipsForLoanIds(
       accountName: e.LLC_BI__Account__r?.Name ?? null,
       borrowerType: e.LLC_BI__Borrower_Type__c ?? null,
       relationshipType: e.LLC_BI__Account__r?.Type ?? null,
+      relationshipId:
+        (e.LLC_BI__Account__r?.Relationship_ID__c as string | undefined) ?? null,
       truNarrativeAccountReference:
         (e.LLC_BI__Account__r?.TruNarrative_Account_Reference__c as string | undefined) ?? null,
     });
