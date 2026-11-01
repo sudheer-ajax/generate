@@ -15,4 +15,8 @@ export interface LoanCollateralExportRow {
   lienPosition: string | null;
   /** LLC_BI__Full_Address__c or composed street/city/postcode */
   collateralAddress: string | null;
+  /** LLC_BI__Collateral__c.Usage__c */
+  usage: string | null;
+  /** LLC_BI__Zip_Code__c or LLC_BI__Postal_Code__c on collateral */
+  postcode: string | null;
 }

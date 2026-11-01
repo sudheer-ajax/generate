@@ -18,7 +18,7 @@ Writes CSV: output/collateral/batch-NNN/collateral-batch-NNN.csv
 
 Filtered by data/export.config.json collateralExport (default: residential type + has address).
 Lien: LLC_BI__Loan_Collateral2__c.LLC_BI__Lien_Position__c
-Address: LLC_BI__Collateral__c.LLC_BI__Full_Address__c
+Address: LLC_BI__Collateral__c.LLC_BI__Full_Address__c | postcode: Zip_Code/Postal_Code | usage: Usage__c
 `);
   process.exit(1);
 }

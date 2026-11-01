@@ -28,8 +28,17 @@ interface LoanCollateralQueryRow {
     LLC_BI__Street_Address__c?: string;
     LLC_BI__City__c?: string;
     LLC_BI__Zip_Code__c?: string;
+    LLC_BI__Postal_Code__c?: string;
+    Usage__c?: string;
   };
   [key: string]: unknown;
+}
+
+function collateralPostcode(col: LoanCollateralQueryRow['LLC_BI__Collateral__r']): string | null {
+  const zip = col?.LLC_BI__Zip_Code__c?.trim();
+  if (zip) return zip;
+  const postal = col?.LLC_BI__Postal_Code__c?.trim();
+  return postal || null;
 }
 
 async function fetchCollateralRowsForLoanIds(
@@ -48,7 +57,9 @@ async function fetchCollateralRowsForLoanIds(
            LLC_BI__Collateral__r.LLC_BI__Full_Address__c,
            LLC_BI__Collateral__r.LLC_BI__Street_Address__c,
            LLC_BI__Collateral__r.LLC_BI__City__c,
-           LLC_BI__Collateral__r.LLC_BI__Zip_Code__c
+           LLC_BI__Collateral__r.LLC_BI__Zip_Code__c,
+           LLC_BI__Collateral__r.LLC_BI__Postal_Code__c,
+           LLC_BI__Collateral__r.Usage__c
     FROM LLC_BI__Loan_Collateral2__c
     WHERE LLC_BI__Loan__c IN (${idList})
     ORDER BY LLC_BI__Loan__c, LLC_BI__Collateral__r.Name, Id
@@ -88,6 +99,8 @@ async function fetchCollateralRowsForLoanIds(
       collateralTypeName: typeName,
       lienPosition: link.LLC_BI__Lien_Position__c ?? null,
       collateralAddress,
+      usage: col?.Usage__c ?? null,
+      postcode: collateralPostcode(col),
     });
   }
 
@@ -105,6 +118,8 @@ function collateralRowsToCsv(rows: LoanCollateralExportRow[]): string {
     'collateralTypeId',
     'collateralTypeName',
     'collateralAddress',
+    'postcode',
+    'usage',
     'lienPosition',
   ];
   const data = rows.map((r) => [
@@ -117,6 +132,8 @@ function collateralRowsToCsv(rows: LoanCollateralExportRow[]): string {
     escapeCsv(r.collateralTypeId),
     escapeCsv(r.collateralTypeName),
     escapeCsv(r.collateralAddress),
+    escapeCsv(r.postcode),
+    escapeCsv(r.usage),
     escapeCsv(r.lienPosition),
   ]);
   return rowsToCsv(headers, data);
