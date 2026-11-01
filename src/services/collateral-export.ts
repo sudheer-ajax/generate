@@ -28,7 +28,6 @@ interface LoanCollateralQueryRow {
     LLC_BI__Street_Address__c?: string;
     LLC_BI__City__c?: string;
     LLC_BI__Zip_Code__c?: string;
-    LLC_BI__Postal_Code__c?: string;
     Usage__c?: string;
   };
   [key: string]: unknown;
@@ -36,9 +35,7 @@ interface LoanCollateralQueryRow {
 
 function collateralPostcode(col: LoanCollateralQueryRow['LLC_BI__Collateral__r']): string | null {
   const zip = col?.LLC_BI__Zip_Code__c?.trim();
-  if (zip) return zip;
-  const postal = col?.LLC_BI__Postal_Code__c?.trim();
-  return postal || null;
+  return zip || null;
 }
 
 async function fetchCollateralRowsForLoanIds(
@@ -58,7 +55,6 @@ async function fetchCollateralRowsForLoanIds(
            LLC_BI__Collateral__r.LLC_BI__Street_Address__c,
            LLC_BI__Collateral__r.LLC_BI__City__c,
            LLC_BI__Collateral__r.LLC_BI__Zip_Code__c,
-           LLC_BI__Collateral__r.LLC_BI__Postal_Code__c,
            LLC_BI__Collateral__r.Usage__c
     FROM LLC_BI__Loan_Collateral2__c
     WHERE LLC_BI__Loan__c IN (${idList})
