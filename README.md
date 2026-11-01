@@ -115,7 +115,7 @@ output/documents/batch-001/{LoanName}_{loanId}/
 
 - **matchNames** / **matchPatterns** — nCino document record **Name** only (`LLC_BI__*Document__c.Name`), not `NDOC__fileName__c`.
 - **label** — token in the saved file name (e.g. **CIF**).
-- **allowedFileExtensions** — e.g. `["pdf"]` to skip other types.
+- **allowedFileExtensions** — empty `[]` (default) downloads every attached file type when the name matches; set e.g. `["pdf"]` later to restrict.
 
 **File name patterns**
 

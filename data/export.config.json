@@ -1,6 +1,6 @@
 {
   "batchSize": 20,
-  "allowedFileExtensions": ["pdf"],
+  "allowedFileExtensions": [],
   "exportTargets": [
     {
       "label": "CIF",
@@ -33,5 +33,5 @@
     "collateralTypeIncludes": "Residential",
     "requireAddress": true
   },
-  "_comment": "exportTargets: matchNames and matchPatterns are case-insensitive (document LLC_BI__*Document__c Name). collateralExport: npm run collateral:batch."
+  "_comment": "allowedFileExtensions: [] = download any file type when name matches; e.g. [\"pdf\"] to restrict. exportTargets names are case-insensitive. collateralExport: npm run collateral:batch."
 }
