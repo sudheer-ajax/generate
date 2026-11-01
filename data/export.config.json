@@ -10,15 +10,21 @@
     {
       "label": "SALIE",
       "matchNames": ["SALIE", "Salie"],
-      "matchPatterns": ["\\bSALIE\\b", "\\bSalie\\b"]
+      "matchPatterns": ["\\bSALIE\\b"]
+    },
+    {
+      "label": "Application_Form",
+      "matchPatterns": ["Application\\s+Form"]
     },
     {
       "label": "Valuation_Report",
-      "matchNames": ["Valuation Report"]
+      "matchNames": ["Valuation Report"],
+      "matchPatterns": ["Valuation\\s+Report"]
     },
     {
       "label": "Credit_Memo",
-      "matchNames": ["Credit Memo"]
+      "matchNames": ["Credit Memo"],
+      "matchPatterns": ["Credit\\s+Memo"]
     }
   ],
   "excludeNamePatterns": [],
@@ -27,5 +33,5 @@
     "collateralTypeIncludes": "Residential",
     "requireAddress": true
   },
-  "_comment": "collateralExport: npm run collateral:batch — lien rows only for residential collateral types with a real address (LLC_BI__Full_Address__c)."
+  "_comment": "exportTargets: matchNames and matchPatterns are case-insensitive (document LLC_BI__*Document__c Name). collateralExport: npm run collateral:batch."
 }

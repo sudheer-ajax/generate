@@ -462,3 +462,80 @@ export async function downloadLoanDocument(
     contentVersionId,
   );
 }
+
+export interface ResolvedDocumentDownload {
+  loanIdOrName: string;
+  documentId: string;
+  contentVersionId?: string;
+}
+
+function escapeSoqlId(id: string): string {
+  return id.replace(/'/g, "\\'");
+}
+
+/**
+ * Resolve loan context for an nCino document Id when loan is not supplied.
+ * ContentVersion Ids (068…) need no loan.
+ */
+export async function resolveDocumentDownloadContext(
+  documentId: string,
+  loanIdOrName?: string | null,
+): Promise<ResolvedDocumentDownload> {
+  await connectNcino();
+
+  if (documentId.startsWith('068')) {
+    return { loanIdOrName: loanIdOrName ?? '', documentId };
+  }
+
+  if (loanIdOrName?.trim()) {
+    return { loanIdOrName: loanIdOrName.trim(), documentId };
+  }
+
+  const docId = escapeSoqlId(documentId);
+  const loanDocs = await query<{ LLC_BI__Loan__c: string; [key: string]: unknown }>(
+    `SELECT LLC_BI__Loan__c FROM ${LOAN_DOCUMENT_OBJECT} WHERE Id = '${docId}' LIMIT 1`,
+  );
+  if (loanDocs[0]?.LLC_BI__Loan__c) {
+    return { loanIdOrName: loanDocs[0].LLC_BI__Loan__c, documentId };
+  }
+
+  const accountDocs = await query<{ LLC_BI__Account__c: string; [key: string]: unknown }>(
+    `SELECT LLC_BI__Account__c FROM ${ACCOUNT_DOCUMENT_OBJECT} WHERE Id = '${docId}' LIMIT 1`,
+  );
+  const accountId = accountDocs[0]?.LLC_BI__Account__c;
+  if (!accountId) {
+    throw new Error(`Unknown document Id (not loan, account, or ContentVersion): ${documentId}`);
+  }
+
+  const entities = await query<{ LLC_BI__Loan__c: string; [key: string]: unknown }>(
+    `SELECT LLC_BI__Loan__c FROM LLC_BI__Legal_Entities__c
+     WHERE LLC_BI__Account__c = '${escapeSoqlId(accountId)}'
+     ORDER BY LastModifiedDate DESC LIMIT 1`,
+  );
+  const loanId = entities[0]?.LLC_BI__Loan__c;
+  if (!loanId) {
+    throw new Error(
+      `Account document ${documentId} has no loan on LLC_BI__Legal_Entities__c — add loanId to the list file`,
+    );
+  }
+  return { loanIdOrName: loanId, documentId };
+}
+
+/** Download by document Id list entry (optional loan and ContentVersion). */
+export async function downloadDocumentRef(
+  documentId: string,
+  loanIdOrName?: string | null,
+  contentVersionId?: string | null,
+): Promise<DocumentDownloadResult> {
+  if (documentId.startsWith('068')) {
+    await connectNcino();
+    return downloadContentVersion(documentId);
+  }
+
+  const resolved = await resolveDocumentDownloadContext(documentId, loanIdOrName);
+  return downloadLoanDocument(
+    resolved.loanIdOrName,
+    resolved.documentId,
+    contentVersionId ?? undefined,
+  );
+}

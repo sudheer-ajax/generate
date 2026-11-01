@@ -67,6 +67,18 @@ npm run docs:batch -- --batch=2 --dry-run
 npm run docs:batch -- 1 --local-only    # skip S3 even if bucket is set
 ```
 
+### Batch download by document Id list
+
+Put nCino document Ids in `data/document-ids.txt` (or set `EXPORT_DOCUMENT_IDS_FILE`). Same `batchSize` in `data/export.config.json` as other batch jobs.
+
+```bash
+npm run docs:batch-ids -- --list
+npm run docs:batch-ids -- 1
+npm run docs:batch-ids -- 2 --dry-run
+```
+
+Line formats: `documentId` | `loanId,documentId` | `loanId,documentId,contentVersionId`. Loan Id is optional for loan-level documents (resolved from the record). Output: `output/document-downloads/batch-NNN/` plus `manifest-batch-NNN.json`.
+
 ### TruNarrative references (CSV by batch)
 
 Same `data/loan-ids.txt` and batch size as document export. One row per **legal entity** on each loan. CSV includes `relationshipType` from **`Account.Type`**, `relationshipId` from **`Account.Relationship_ID__c`**, and TruNarrative id from `Account.TruNarrative_Account_Reference__c`.

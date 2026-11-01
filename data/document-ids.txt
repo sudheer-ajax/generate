@@ -1,0 +1,11 @@
+# nCino document downloads — one entry per line (batched via data/export.config.json batchSize).
+# Formats:
+#   documentId
+#   loanId,documentId
+#   loanId,documentId,contentVersionId
+#
+# Loan Id optional for LLC_BI__LLC_LoanDocument__c (resolved from record).
+# For borrower LLC_BI__AccountDocument__c, include loanId if auto-resolve fails.
+
+# Example loan document (replace with your ids):
+# a0iTl000000w8ObIAI,a0bTl0000013RIKIA2

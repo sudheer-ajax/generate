@@ -14,6 +14,7 @@
     "docs:list": "tsx src/cli/loan-documents-cli.ts list",
     "docs:download": "tsx src/cli/loan-documents-cli.ts download",
     "docs:batch": "tsx src/cli/docs-batch-export.ts",
+    "docs:batch-ids": "tsx src/cli/document-id-batch.ts",
     "trunarrative:batch": "tsx src/cli/trunarrative-batch.ts",
     "collateral:batch": "tsx src/cli/collateral-batch.ts",
     "loans:existence": "tsx src/cli/loan-existence-check.ts",

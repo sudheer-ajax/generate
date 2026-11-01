@@ -2,12 +2,27 @@ import type { DocumentSummary } from '../types/documents.js';
 import type { ExportConfig, ExportTarget, SkippedDocumentRecord } from '../types/export.js';
 import { documentHasAllowedFile } from './export-file-filter.js';
 
+/** All export name / pattern matching is case-insensitive. */
+function normalizeDocumentName(name: string): string {
+  return name.trim();
+}
+
 function patternMatches(docName: string, pattern: string): boolean {
+  const haystack = normalizeDocumentName(docName);
+  const needle = pattern.trim();
+  if (!needle) return false;
   try {
-    return new RegExp(pattern, 'i').test(docName);
+    return new RegExp(needle, 'i').test(haystack);
   } catch {
-    return docName.toLowerCase().includes(pattern.toLowerCase());
+    return haystack.toLowerCase().includes(needle.toLowerCase());
   }
+}
+
+function exactNameMatches(docName: string, configuredName: string): boolean {
+  return (
+    normalizeDocumentName(docName).toLowerCase() ===
+    configuredName.trim().toLowerCase()
+  );
 }
 
 /** nCino document record Name (LLC_BI__LLC_LoanDocument__c.Name / AccountDocument Name). */
@@ -25,14 +40,14 @@ export function matchExportTarget(
   documentName: string,
   cfg: ExportConfig,
 ): ExportTarget | null {
-  const name = documentName.trim();
+  const name = normalizeDocumentName(documentName);
   for (const ex of cfg.excludeNamePatterns) {
     if (patternMatches(name, ex)) return null;
   }
 
   for (const target of resolveExportTargets(cfg)) {
     const names = target.matchNames ?? [];
-    if (names.some((n) => n.trim().toLowerCase() === name.toLowerCase())) {
+    if (names.some((n) => exactNameMatches(name, n))) {
       return target;
     }
     for (const p of target.matchPatterns ?? []) {
