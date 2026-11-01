@@ -103,6 +103,14 @@ Output: `output/collateral/batch-001/collateral-batch-001.csv`
 
 By default only **residential** collateral (`collateralTypeIncludes`: `Residential`) with a real **address** (`LLC_BI__Full_Address__c`, not “No Address Provided”). Configure in `data/export.config.json` → `collateralExport`. CSV includes **collateralAddress**, **postcode** (`LLC_BI__Zip_Code__c` / `LLC_BI__Postal_Code__c`), **usage** (`Usage__c`), and **lienPosition**.
 
+**ONS postcode → ITL (later):** download bulk NSPL locally (not committed to git):
+
+```bash
+npm run geography:download-nspl
+```
+
+See `data/geography/README.md` for licence and column names (`itl25cd`).
+
 **Output layout**
 
 ```text

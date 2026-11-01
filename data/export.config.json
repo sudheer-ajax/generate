@@ -2,6 +2,7 @@
   "batchSize": 20,
   "allowedFileExtensions": [],
   "exportTargets": [
+    
     {
       "label": "CIF",
       "matchNames": ["CIF"],

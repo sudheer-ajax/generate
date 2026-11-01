@@ -8,3 +8,6 @@ output/
 .DS_Store
 output/
 .vscode/
+data/geography/NSPL_*.zip
+data/geography/nspl-feb-2026/
+data/geography/nspl-manifest.json
