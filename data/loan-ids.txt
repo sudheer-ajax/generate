@@ -1,4 +1,5 @@
-# nCino loan references — one per line (Salesforce Id or loan Name).
+# One ref per line (Salesforce Id or Name). Used by docs/trunarrative/collateral/enquiry batch jobs.
+# Loans: LLC_BI__Loan__c Id or loan Name | Enquiries: nRE__Referral__c Id or Enquiry Number (Ref-…)
 # Lines starting with # are ignored. Replace with your full list (~300 loans).
 
 a0i4K0000072cbaQAA

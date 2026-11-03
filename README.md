@@ -90,6 +90,19 @@ npm run trunarrative:batch -- 1
 
 Output: `output/trunarrative/batch-001/trunarrative-batch-001.csv` (column **Id** = 1-based row number within the batch).
 
+### Enquiries (CSV by batch)
+
+Put **Enquiry** Salesforce Ids (`nRE__Referral__c`) or **Enquiry Number** (`Name`, e.g. `Ref-0001485`) in `data/loan-ids.txt` (same batch size as other jobs).
+
+```bash
+npm run enquiry:batch -- --list
+npm run enquiry:batch -- 1
+```
+
+CSV: **enquirySourceChannel** (`nRE__Referral_Source__c`), **enquiryNumber** (`Name`), **loanId** (`Loan__c` → `LLC_BI__Loan__c`), **loanName**.
+
+Output: `output/enquiry/batch-001/enquiry-batch-001.csv`
+
 ### Loan collateral / securities (CSV by batch)
 
 Same `data/loan-ids.txt` and batch size. One row per **LLC_BI__Loan_Collateral2__c** link (security on the loan).
