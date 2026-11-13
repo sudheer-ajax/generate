@@ -29,6 +29,12 @@ interface LoanCollateralQueryRow {
     LLC_BI__City__c?: string;
     LLC_BI__Zip_Code__c?: string;
     Usage__c?: string;
+    Current_Value_Basis_1__c?: string | number;
+    Current_Value_Basis_2__c?: string | number;
+    LLC_BI__Appraisal_Date__c?: string;
+    LLC_BI__Assessment_Method__c?: string;
+    Subdivision__c?: string;
+    EPC_Rating__c?: string;
   };
   [key: string]: unknown;
 }
@@ -36,6 +42,14 @@ interface LoanCollateralQueryRow {
 function collateralPostcode(col: LoanCollateralQueryRow['LLC_BI__Collateral__r']): string | null {
   const zip = col?.LLC_BI__Zip_Code__c?.trim();
   return zip || null;
+}
+
+/** CSV cell: null/undefined → empty column; numbers and text still exported. */
+function collateralScalar(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === 'number' && !Number.isNaN(value)) return String(value);
+  const s = String(value).trim();
+  return s === '' ? null : s;
 }
 
 async function fetchCollateralRowsForLoanIds(
@@ -55,7 +69,13 @@ async function fetchCollateralRowsForLoanIds(
            LLC_BI__Collateral__r.LLC_BI__Street_Address__c,
            LLC_BI__Collateral__r.LLC_BI__City__c,
            LLC_BI__Collateral__r.LLC_BI__Zip_Code__c,
-           LLC_BI__Collateral__r.Usage__c
+           LLC_BI__Collateral__r.Usage__c,
+           LLC_BI__Collateral__r.Current_Value_Basis_1__c,
+           LLC_BI__Collateral__r.Current_Value_Basis_2__c,
+           LLC_BI__Collateral__r.LLC_BI__Appraisal_Date__c,
+           LLC_BI__Collateral__r.LLC_BI__Assessment_Method__c,
+           LLC_BI__Collateral__r.Subdivision__c,
+           LLC_BI__Collateral__r.EPC_Rating__c
     FROM LLC_BI__Loan_Collateral2__c
     WHERE LLC_BI__Loan__c IN (${idList})
     ORDER BY LLC_BI__Loan__c, LLC_BI__Collateral__r.Name, Id
@@ -91,6 +111,12 @@ async function fetchCollateralRowsForLoanIds(
       loanCollateralId: link.Id,
       collateralId,
       collateralName: col?.Name ?? null,
+      currentValueBasis1: collateralScalar(col?.Current_Value_Basis_1__c),
+      currentValueBasis2: collateralScalar(col?.Current_Value_Basis_2__c),
+      appraisalDate: col?.LLC_BI__Appraisal_Date__c ?? null,
+      assessmentMethod: col?.LLC_BI__Assessment_Method__c ?? null,
+      subdivision: col?.Subdivision__c ?? null,
+      epcRating: col?.EPC_Rating__c ?? null,
       collateralTypeId: col?.LLC_BI__Collateral_Type__c ?? null,
       collateralTypeName: typeName,
       lienPosition: link.LLC_BI__Lien_Position__c ?? null,
@@ -111,6 +137,12 @@ function collateralRowsToCsv(rows: LoanCollateralExportRow[]): string {
     'loanCollateralId',
     'collateralId',
     'collateralName',
+    'currentValueBasis1',
+    'currentValueBasis2',
+    'appraisalDate',
+    'assessmentMethod',
+    'subdivision',
+    'epcRating',
     'collateralTypeId',
     'collateralTypeName',
     'collateralAddress',
@@ -125,6 +157,12 @@ function collateralRowsToCsv(rows: LoanCollateralExportRow[]): string {
     escapeCsv(r.loanCollateralId),
     escapeCsv(r.collateralId),
     escapeCsv(r.collateralName),
+    escapeCsv(r.currentValueBasis1),
+    escapeCsv(r.currentValueBasis2),
+    escapeCsv(r.appraisalDate),
+    escapeCsv(r.assessmentMethod),
+    escapeCsv(r.subdivision),
+    escapeCsv(r.epcRating),
     escapeCsv(r.collateralTypeId),
     escapeCsv(r.collateralTypeName),
     escapeCsv(r.collateralAddress),

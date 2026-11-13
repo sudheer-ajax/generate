@@ -15,6 +15,14 @@ export const RELATIONSHIP_ID_FIELD = 'Relationship_ID__c';
 interface LegalEntityWithAccountRow {
   Id: string;
   LLC_BI__Loan__c: string;
+  LLC_BI__Loan__r?: {
+    LLC_BI__Index__c?: string;
+    Current_LTV_Basis__c?: string | number;
+    Current_LTV_Basis_2__c?: string | number;
+    LTV_Basis_1__c?: string | number;
+    LTV_Basis_2__c?: string | number;
+    LLC_BI__LeadSource__c?: string;
+  };
   LLC_BI__Account__c?: string;
   LLC_BI__Borrower_Type__c?: string;
   LLC_BI__Account__r?: {
@@ -33,6 +41,13 @@ function escapeCsv(value: string | null | undefined): string {
   return s;
 }
 
+function loanScalar(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  if (typeof value === 'number' && !Number.isNaN(value)) return String(value);
+  const s = String(value).trim();
+  return s === '' ? null : s;
+}
+
 function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
   const header = [
     'Id',
@@ -45,6 +60,12 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
     'relationshipType',
     'relationshipId',
     'truNarrativeAccountReference',
+    'loanIndex',
+    'currentLtvBasis',
+    'currentLtvBasis2',
+    'ltvBasis1',
+    'ltvBasis2',
+    'leadSource',
   ];
   const lines = [header.join(',')];
   for (const r of rows) {
@@ -60,6 +81,12 @@ function rowsToCsv(rows: TruNarrativeRelationshipRow[]): string {
         escapeCsv(r.relationshipType),
         escapeCsv(r.relationshipId),
         escapeCsv(r.truNarrativeAccountReference),
+        escapeCsv(r.loanIndex),
+        escapeCsv(r.currentLtvBasis),
+        escapeCsv(r.currentLtvBasis2),
+        escapeCsv(r.ltvBasis1),
+        escapeCsv(r.ltvBasis2),
+        escapeCsv(r.leadSource),
       ].join(','),
     );
   }
@@ -75,6 +102,12 @@ async function fetchRelationshipsForLoanIds(
   const idList = loanIds.map((id) => `'${id}'`).join(',');
   const soql = `
     SELECT Id, LLC_BI__Loan__c, LLC_BI__Account__c, LLC_BI__Borrower_Type__c,
+           LLC_BI__Loan__r.LLC_BI__Index__c,
+           LLC_BI__Loan__r.Current_LTV_Basis__c,
+           LLC_BI__Loan__r.Current_LTV_Basis_2__c,
+           LLC_BI__Loan__r.LTV_Basis_1__c,
+           LLC_BI__Loan__r.LTV_Basis_2__c,
+           LLC_BI__Loan__r.LLC_BI__LeadSource__c,
            LLC_BI__Account__r.Id, LLC_BI__Account__r.Name, LLC_BI__Account__r.Type,
            LLC_BI__Account__r.${TRU_NARRATIVE_ACCOUNT_FIELD},
            LLC_BI__Account__r.${RELATIONSHIP_ID_FIELD}
@@ -92,6 +125,7 @@ async function fetchRelationshipsForLoanIds(
   for (const e of entities) {
     const accountId = e.LLC_BI__Account__c ?? e.LLC_BI__Account__r?.Id;
     if (!accountId) continue;
+    const loan = e.LLC_BI__Loan__r;
     rows.push({
       id: nextId++,
       loanId: e.LLC_BI__Loan__c,
@@ -105,6 +139,12 @@ async function fetchRelationshipsForLoanIds(
         (e.LLC_BI__Account__r?.Relationship_ID__c as string | undefined) ?? null,
       truNarrativeAccountReference:
         (e.LLC_BI__Account__r?.TruNarrative_Account_Reference__c as string | undefined) ?? null,
+      loanIndex: loanScalar(loan?.LLC_BI__Index__c),
+      currentLtvBasis: loanScalar(loan?.Current_LTV_Basis__c),
+      currentLtvBasis2: loanScalar(loan?.Current_LTV_Basis_2__c),
+      ltvBasis1: loanScalar(loan?.LTV_Basis_1__c),
+      ltvBasis2: loanScalar(loan?.LTV_Basis_2__c),
+      leadSource: loanScalar(loan?.LLC_BI__LeadSource__c),
     });
   }
   return rows;

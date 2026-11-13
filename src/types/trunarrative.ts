@@ -12,4 +12,12 @@ export interface TruNarrativeRelationshipRow {
   /** Account.Relationship_ID__c */
   relationshipId: string | null;
   truNarrativeAccountReference: string | null;
+  /** LLC_BI__Loan__c.LLC_BI__Index__c */
+  loanIndex: string | null;
+  currentLtvBasis: string | null;
+  currentLtvBasis2: string | null;
+  ltvBasis1: string | null;
+  ltvBasis2: string | null;
+  /** LLC_BI__Loan__c.LLC_BI__LeadSource__c */
+  leadSource: string | null;
 }
