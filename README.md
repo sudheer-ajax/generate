@@ -64,9 +64,11 @@ npm run loans:lookup-key -- 1
 npm run loans:lookup-key -- all
 ```
 
-Output: `output/loan-lookup-key/batch-NNN/loan-lookup-key-batch-NNN.csv` — columns `lookupKey`, `loanId`, `loanName`. Missing keys are still listed with empty `loanId` / `loanName`; console warns with `Not found`.
+Output: `output/loan-lookup-key/batch-NNN/loan-lookup-key-batch-NNN.csv` — `inputRef`, `lookupKey`, `Account_ID__c`, `Mambu_Loan_for_Integrations__c`, `loanId`, `loanName`, `resolvedVia`.
 
-Use the **exact** `LLC_BI__lookupKey__c` from the loan record (e.g. `18075722` — a dropped leading digit like `8075722` will not match).
+Resolution order: `LLC_BI__lookupKey__c`, then `Account_ID__c`, then Mambu field (exact), then Mambu `lookupKey:accountId` (either segment). When `Mambu_Loan_for_Integrations__c` is `number:number`, the first part is the lookup key and the second is account id.
+
+Unresolved inputs also go to `loan-lookup-key-batch-NNN-missing.csv`. Main CSV still includes unresolved rows with empty loan fields.
 
 ### Batch export (many loans → local folder + optional S3)
 

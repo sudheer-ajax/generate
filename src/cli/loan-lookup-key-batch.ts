@@ -16,7 +16,8 @@ Usage:
 
 Reads ${config.export.loanLookupKeysFile} (one LLC_BI__lookupKey__c per line, e.g. 8075722).
 Writes CSV: output/loan-lookup-key/batch-NNN/loan-lookup-key-batch-NNN.csv
-Columns: Id, lookupKey, loanId, loanName
+Columns: inputRef, lookupKey, accountId, mambuLoanForIntegrations, loanId, loanName, resolvedVia
+Also writes …-missing.csv for inputs that could not be resolved.
 `);
   process.exit(1);
 }
@@ -64,6 +65,9 @@ async function main(): Promise<void> {
       console.log(`Loan lookup key export ${batch.batchLabel} (${batch.loanRefs.length} keys)`);
       const result = await exportLoanLookupKeyBatch(batch);
       console.log(`Rows: ${result.rowCount} | CSV: ${result.csvPath}`);
+      if (result.missingCount) {
+        console.log(`Missing CSV: ${result.missingCsvPath}`);
+      }
       if (result.missing.length) {
         totalMissing += result.missing.length;
         console.warn(`Not found (${result.missing.length}): ${result.missing.join(', ')}`);
@@ -87,6 +91,9 @@ async function main(): Promise<void> {
   const result = await exportLoanLookupKeyBatch(batch);
   console.log(`Rows: ${result.rowCount}`);
   console.log(`CSV: ${result.csvPath}`);
+  if (result.missingCount) {
+    console.log(`Missing CSV: ${result.missingCsvPath} (${result.missingCount} unresolved)`);
+  }
   if (result.missing.length) {
     console.warn(`Not found (${result.missing.length}): ${result.missing.join(', ')}`);
     console.warn(
