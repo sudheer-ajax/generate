@@ -235,3 +235,39 @@ Optional BOE template preview (previous repo purpose):
 ```bash
 npm run legacy:boe-preview -- --ncino-only
 ```
+
+LLC_BI__Index__c
+
+ Row Number 	 Loan Reference (nCino / Mambu) 	 Account ID (Mapping ID) 	 Loan / Borrower Name 	Counterparty ID	Loan Category	Currency	Accounting Balance	Gross Loan Amount (nCino)	Undrawn Balance	Application Date	Start Date	Loan Term (Months)	Fixed-Rate Term (Months)	Subsequent Variable-Rate Term (Months)	Maturity Date	Time to Maturity (Months)	Payment Frequency Code	Repayment Type Code	"Interest Rate Type 
+(Fixed / Variable)"	Interest Rate	Base Rate (Swaps)	Security Value	Loan-to-Value Ratio (LTV)	Security Charge Priority	Regulatory Real Estate Exposure Flag	Real Estate Category	Loan Status	Arrears Balance	Provisions	Arrangement Fees	C&S Fees
+
+
+
+Row Number -> sequence number
+Loan Reference (nCino / Mambu) -> loanId
+Account ID (Mapping ID) -> LLC_BI__lookupKey__c
+Loan / Borrower Name -> Name
+Loan Category -> LLC_BI__Product_Type__c
+Currency -> GBP
+Accounting Balance -> <leave blank>
+Gross Loan Amount (nCino) -> txt -> original__loan__amount / LLC_BI__Amount__c
+Undrawn Balance -> <leave 0 default>
+Application Date -> Application_Date__c
+Start Date -> LLC_BI__Booked_Date__c
+Loan Term (Months) -> custom_fields.__loan_maturity.loan_term_months / LLC_BI__Term_Months__c
+Fixed-Rate Term (Months) -> Loan_Revert_Month_Months__c ?? LLC_BI__Term_Months__c
+Subsequent Variable-Rate Term (Months) -> LLC_BI__Term_Months__c - Loan_Revert_Month_Months__c
+Maturity Date -> Loan_Maturity_Date__c
+Time to Maturity (Months)	-> based on start date and maturity date, calculate time to maturity months 
+Payment Frequency Code -> LLC_BI__Payment_Schedule__c 
+Repayment Type Code -> LLC_BI__Payment_Type__c
+Interest Rate Type -> LLC_BI__Pricing_Basis__c
+Interest Rate -> LLC_BI__Current_Interest_Rate__c
+Base Rate (Swaps) -> LLC_BI__Current_Interest_Rate__c - LLC_BI__Spread__c
+Security Value -> Value_Basis_1__c
+Loan-to-Value Ratio (LTV) -> Current_LTV_Basis__c
+Security Charge Priority -> <Constant to First>
+Regulatory Real Estate Exposure Flag -> <Constant to YES>
+Real Estate Category -> LLC_BI__Product__c
+Loan Status -> Json -> account_state
+Arrears Balance -> Json -> account_state == 'ACTIVE_IN_ARREARS' then interest_settings.interest_rate_source == 'FIXED_INTEREST_RATE' then return balances.interest_due else return balances.interest_due + balances.principal_due
