@@ -54,6 +54,20 @@ npm run loans:existence
 
 CSV columns: `index`, `inputRef`, `inputKind`, `existsInOrg` (`yes`/`no`), `loanId`, `loanName`. Console prints found/missing counts. Full sandbox copies usually keep the same record Ids as prod.
 
+### Resolve loans by nCino lookup key (`LLC_BI__lookupKey__c`)
+
+Put one numeric lookup key per line in `data/loan-lookup-keys.txt` (or `EXPORT_LOAN_LOOKUP_KEYS_FILE`). Same batch size as `data/export.config.json` → `batchSize`.
+
+```bash
+npm run loans:lookup-key -- --list
+npm run loans:lookup-key -- 1
+npm run loans:lookup-key -- all
+```
+
+Output: `output/loan-lookup-key/batch-NNN/loan-lookup-key-batch-NNN.csv` — columns `lookupKey`, `loanId`, `loanName`. Missing keys are still listed with empty `loanId` / `loanName`; console warns with `Not found`.
+
+Use the **exact** `LLC_BI__lookupKey__c` from the loan record (e.g. `18075722` — a dropped leading digit like `8075722` will not match).
+
 ### Batch export (many loans → local folder + optional S3)
 
 1. Put nCino loan Ids or Names in `data/loan-ids.txt` (one per line).
@@ -81,7 +95,7 @@ Line formats: `documentId` | `loanId,documentId` | `loanId,documentId,contentVer
 
 ### TruNarrative references (CSV by batch)
 
-Same `data/loan-ids.txt` and batch size as document export. One row per **legal entity** on each loan. CSV includes `relationshipType` from **`Account.Type`**, `relationshipId` from **`Account.Relationship_ID__c`**, and TruNarrative id from `Account.TruNarrative_Account_Reference__c`.
+Same `data/loan-ids.txt` and batch size as document export. One row per **legal entity** on each loan. CSV includes `relationshipType` from **`Account.Type`**, `relationshipId` from **`Account.Relationship_ID__c`**, TruNarrative id from `Account.TruNarrative_Account_Reference__c`, and loan fields `loanIndex` (`LLC_BI__Index__c`), LTV columns (`Current_LTV_Basis__c`, `Current_LTV_Basis_2__c`, `LTV_Basis_1__c`, `LTV_Basis_2__c`), and `leadSource` (`LLC_BI__LeadSource__c`).
 
 ```bash
 npm run trunarrative:batch -- --list
@@ -114,7 +128,7 @@ npm run collateral:batch -- 1
 
 Output: `output/collateral/batch-001/collateral-batch-001.csv`
 
-By default only **residential** collateral (`collateralTypeIncludes`: `Residential`) with a real **address** (`LLC_BI__Full_Address__c`, not “No Address Provided”). Configure in `data/export.config.json` → `collateralExport`. CSV includes **collateralAddress**, **postcode** (`LLC_BI__Zip_Code__c`), **usage** (`Usage__c`), and **lienPosition**.
+By default only **residential** collateral (`collateralTypeIncludes`: `Residential`) with a real **address** (`LLC_BI__Full_Address__c`, not “No Address Provided”). Configure in `data/export.config.json` → `collateralExport`. CSV includes **collateralName** (`Name`), address/postcode, **usage**, **lienPosition**, valuation fields (`Current_Value_Basis_1__c`, `Current_Value_Basis_2__c`, `LLC_BI__Appraisal_Date__c`, `LLC_BI__Assessment_Method__c`), **subdivision**, and **EPC_Rating__c**. `currentValueBasis2` is always a CSV column (empty cell when Salesforce has no value).
 
 **Output layout**
 
