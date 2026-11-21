@@ -20,6 +20,7 @@
     "enquiry:batch": "tsx src/cli/enquiry-batch.ts",
     "loans:existence": "tsx src/cli/loan-existence-check.ts",
     "loans:lookup-key": "tsx src/cli/loan-lookup-key-batch.ts",
+    "portfolio:batch": "tsx src/cli/portfolio-loan-batch.ts",
     "legacy:boe-preview": "tsx src/cli/boe-preview.ts",
     "typecheck": "tsc --noEmit"
   },

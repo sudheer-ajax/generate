@@ -79,6 +79,8 @@ export const config = {
     loanIdsFile: process.env.EXPORT_LOAN_IDS_FILE || 'data/loan-ids.txt',
     loanLookupKeysFile:
       process.env.EXPORT_LOAN_LOOKUP_KEYS_FILE || 'data/loan-lookup-keys.txt',
+    mambuLoanAccountsFile:
+      process.env.MAMBU_LOAN_ACCOUNTS_FILE || 'data/mambu/loan-accounts.txt',
     configFile: process.env.EXPORT_CONFIG_FILE || 'data/export.config.json',
     localDir: process.env.EXPORT_LOCAL_DIR || 'output/documents',
     s3Bucket: (process.env.AWS_S3_BUCKET || '').trim(),

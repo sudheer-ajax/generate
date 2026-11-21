@@ -70,6 +70,23 @@ Resolution order: `LLC_BI__lookupKey__c`, then `Account_ID__c`, then Mambu field
 
 Unresolved inputs also go to `loan-lookup-key-batch-NNN-missing.csv`. Main CSV still includes unresolved rows with empty loan fields.
 
+### Portfolio loan register CSV (nCino + Mambu JSONL)
+
+Combines `data/loan-ids.txt` with local Mambu Singer export `data/mambu/loan-accounts.txt` (JSON lines; uses `type: RECORD` / `stream: loan_accounts` and `custom_fields.__loancreation.n_cino__loan__object__id` to join). nCino fields come from `LLC_BI__Loan__c`; status and arrears from Mambu JSON per mapping in this README (portfolio section). Optional `BOE_CUTOFF_DATE` sets the as-of date for **Time to Maturity (Months)**.
+
+```bash
+npm run portfolio:batch -- --list
+npm run portfolio:batch -- 1
+npm run portfolio:batch -- all
+npm run portfolio:batch -- all --single
+npm run portfolio:batch -- all --single --out=output/portfolio/register.csv
+```
+
+Per batch: `output/portfolio/batch-NNN/portfolio-batch-NNN.csv`.  
+**All loans in one file:** `all --single` → `output/portfolio/portfolio-all.csv` (and `portfolio-all-missing-mambu.csv`). Optional `--out=` for a custom path.
+
+Override Mambu file: `MAMBU_LOAN_ACCOUNTS_FILE=...`
+
 ### Batch export (many loans → local folder + optional S3)
 
 1. Put nCino loan Ids or Names in `data/loan-ids.txt` (one per line).
