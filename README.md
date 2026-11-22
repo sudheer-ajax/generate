@@ -54,21 +54,16 @@ npm run loans:existence
 
 CSV columns: `index`, `inputRef`, `inputKind`, `existsInOrg` (`yes`/`no`), `loanId`, `loanName`. Console prints found/missing counts. Full sandbox copies usually keep the same record Ids as prod.
 
-### Resolve loans by nCino lookup key (`LLC_BI__lookupKey__c`)
+### Resolve loans by `Account_ID__c`
 
-Put one numeric lookup key per line in `data/loan-lookup-keys.txt` (or `EXPORT_LOAN_LOOKUP_KEYS_FILE`). Same batch size as `data/export.config.json` → `batchSize`.
+Put one **Account ID (Mapping ID)** per line in `data/loan-lookup-keys.txt` (or `EXPORT_LOAN_LOOKUP_KEYS_FILE`). Each value matches `LLC_BI__Loan__c.Account_ID__c`.
 
 ```bash
-npm run loans:lookup-key -- --list
-npm run loans:lookup-key -- 1
-npm run loans:lookup-key -- all
+npm run loans:lookup-key
+npm run loans:lookup-key -- --out=output/loan-lookup-key/custom.csv
 ```
 
-Output: `output/loan-lookup-key/batch-NNN/loan-lookup-key-batch-NNN.csv` — `inputRef`, `lookupKey`, `Account_ID__c`, `Mambu_Loan_for_Integrations__c`, `loanId`, `loanName`, `resolvedVia`.
-
-Resolution order: `LLC_BI__lookupKey__c`, then `Account_ID__c`, then Mambu field (exact), then Mambu `lookupKey:accountId` (either segment). When `Mambu_Loan_for_Integrations__c` is `number:number`, the first part is the lookup key and the second is account id.
-
-Unresolved inputs also go to `loan-lookup-key-batch-NNN-missing.csv`. Main CSV still includes unresolved rows with empty loan fields.
+Single CSV: `output/loan-lookup-key/loans-by-account-id.csv` — `accountIdInput`, `accountId`, `loanId`, `loanName`. Missing account ids stay in the file with blank loan columns.
 
 ### Portfolio loan register CSV (nCino + Mambu JSONL)
 

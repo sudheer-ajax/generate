@@ -1,4 +1,4 @@
-# One LLC_BI__lookupKey__c per line — must match Salesforce exactly (all digits, e.g. 18075722 not 8075722).
+# One Account_ID__c per line (LLC_BI__Loan__c.Account_ID__c).
 # Lines starting with # are ignored.
 
-18075722
+# 18075722
