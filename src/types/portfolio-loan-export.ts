@@ -50,6 +50,10 @@ export interface PortfolioLoanRow extends PortfolioFeeFields {
   provisions: string | null;
   arrangementFees: string | null;
   csFees: string | null;
+  /** Mambu loan_transactions (CLOSED loans only): Penalty Interest Fee line items on FEE_APPLIED. */
+  penaltyInterestFee: string | null;
+  /** Mambu loan_transactions (CLOSED loans only): Miscellaneous Lending Fee on FEE_APPLIED. */
+  miscellaneousFees: string | null;
   inputRef: string;
   mambuLoanId: string | null;
 }

@@ -10,6 +10,11 @@ import {
   type MambuLoanAccountRecord,
 } from './mambu-loan-accounts-file.js';
 import {
+  closedLoanMambuFees,
+  loadMambuLoanTransactionsFile,
+  type MambuLoanTransactionsIndex,
+} from './mambu-loan-transactions.js';
+import {
   borrowerRelationshipIdForLoan,
   fetchBorrowerRelationshipIdByLoanId,
 } from './borrower-counterparty.js';
@@ -100,6 +105,8 @@ const CSV_HEADERS: (keyof PortfolioLoanRow)[] = [
   ...PORTFOLIO_FEE_TYPE_COLUMNS.map((c) => c.columnKey),
   'arrangementFees',
   'csFees',
+  'penaltyInterestFee',
+  'miscellaneousFees',
   'inputRef',
   'mambuLoanId',
 ];
@@ -153,6 +160,8 @@ const HEADER_LABELS: Record<keyof PortfolioLoanRow, string> = {
   legalFee: 'Legal',
   arrangementFees: 'Arrangement Fees',
   csFees: 'C&S Fees',
+  penaltyInterestFee: 'Penalty Interest Fee',
+  miscellaneousFees: 'Miscellaneous Fees',
   inputRef: 'inputRef',
   mambuLoanId: 'mambuLoanId',
 } satisfies Record<keyof PortfolioLoanRow, string>;
@@ -271,6 +280,7 @@ function buildRow(
   mambu: MambuLoanAccountRecord | undefined,
   counterpartyId: string | null,
   feeFields: ReturnType<typeof portfolioFeeFieldsForLoan>,
+  mambuTxFees: ReturnType<typeof closedLoanMambuFees>,
 ): PortfolioLoanRow {
   const termNcino = parseNumber(loan?.LLC_BI__Term_Months__c);
   const termMambu = parseNumber(mambu?.loanMaturity.loan_term_months);
@@ -341,6 +351,8 @@ function buildRow(
     ...feeFields,
     arrangementFees: feeFields.arrangementFee,
     csFees: feeFields.coordinationAndStructuringFee,
+    penaltyInterestFee: mambuTxFees.penaltyInterestFee,
+    miscellaneousFees: mambuTxFees.miscellaneousFees,
     inputRef,
     mambuLoanId: mambu?.mambuAccountId ?? null,
   };
@@ -398,9 +410,13 @@ async function resolveLoanRefs(
 export async function buildPortfolioRows(
   loanRefs: string[],
   mambuFilePath: string,
+  mambuTransactionsFilePath?: string,
 ): Promise<PortfolioLoanRow[]> {
   await connectNcino();
   const mambuIndex = loadMambuLoanAccountsFile(mambuFilePath);
+  const txIndex: MambuLoanTransactionsIndex = loadMambuLoanTransactionsFile(
+    mambuTransactionsFilePath ?? config.export.mambuLoanTransactionsFile,
+  );
   const resolved = await resolveLoanRefs(loanRefs);
 
   const ids = [...new Set(resolved.map((r) => r.id).filter(Boolean) as string[])];
@@ -417,7 +433,12 @@ export async function buildPortfolioRows(
     const mambu = id ? findMambuRecord(mambuIndex, id) : undefined;
     const counterpartyId = borrowerRelationshipIdForLoan(counterpartyByLoan, id);
     const feeFields = portfolioFeeFieldsForLoan(feesByLoan, id);
-    rows.push(buildRow(rowNumber++, inputRef, loan ?? null, mambu, counterpartyId, feeFields));
+    const encodedKey = mambu?.record.encoded_key != null ? String(mambu.record.encoded_key) : undefined;
+    const accountState = mambu?.record.account_state != null ? String(mambu.record.account_state) : null;
+    const mambuTxFees = closedLoanMambuFees(txIndex, encodedKey, accountState);
+    rows.push(
+      buildRow(rowNumber++, inputRef, loan ?? null, mambu, counterpartyId, feeFields, mambuTxFees),
+    );
   }
   return rows;
 }

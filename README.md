@@ -71,6 +71,8 @@ Combines `data/loan-ids.txt` with local Mambu Singer export `data/mambu/loan-acc
 
 Fee columns: child `LLC_BI__Fee__c` records on **`LLC_BI__Loan__c`** (`LLC_BI__Fee__c.LLC_BI__Loan__c`). Each column matches `LLC_BI__Fee_Type__c` (e.g. Arrangement, Admin); amount from `LLC_BI__Amount__c` (summed if multiple rows). **Legal** uses fee types Legal or Attorney.
 
+**Penalty Interest Fee** and **Miscellaneous Fees** (Mambu JSONL `data/mambu/loan-transactions.txt`, override `MAMBU_LOAN_TRANSACTIONS_FILE`): only when Mambu `account_state` is **CLOSED**. Join loan `record.encoded_key` to transaction `parent_account_key`; sum `fees[].amount` on transactions with `type` **FEE_APPLIED** and fee name **Penalty Interest Fee** or **Miscellaneous Lending Fee**. Other loans leave these columns blank.
+
 ```bash
 npm run portfolio:batch -- --list
 npm run portfolio:batch -- 1
