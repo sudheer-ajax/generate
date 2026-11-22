@@ -9,6 +9,10 @@ import {
   loadMambuLoanAccountsFile,
   type MambuLoanAccountRecord,
 } from './mambu-loan-accounts-file.js';
+import {
+  borrowerRelationshipIdForLoan,
+  fetchBorrowerRelationshipIdByLoanId,
+} from './borrower-counterparty.js';
 import { resolveLoanRef } from './loan-documents.js';
 
 const LOAN_OBJECT = 'LLC_BI__Loan__c';
@@ -243,6 +247,7 @@ function buildRow(
   inputRef: string,
   loan: NcinoLoanRow | null,
   mambu: MambuLoanAccountRecord | undefined,
+  counterpartyId: string | null,
 ): PortfolioLoanRow {
   const termNcino = parseNumber(loan?.LLC_BI__Term_Months__c);
   const termMambu = parseNumber(mambu?.loanMaturity.loan_term_months);
@@ -281,7 +286,7 @@ function buildRow(
     loanReference: loan?.Id ?? null,
     accountId: scalar(loan?.LLC_BI__lookupKey__c),
     loanBorrowerName: loan?.Name ?? scalar(mambu?.loancreation.loan_name),
-    counterpartyId: null,
+    counterpartyId,
     loanCategory: loan?.LLC_BI__Product_Type__c ?? null,
     currency: 'GBP',
     accountingBalance: null,
@@ -375,14 +380,18 @@ export async function buildPortfolioRows(
   const resolved = await resolveLoanRefs(loanRefs);
 
   const ids = [...new Set(resolved.map((r) => r.id).filter(Boolean) as string[])];
-  const loansById = ids.length ? await fetchLoansByIds(ids) : new Map<string, NcinoLoanRow>();
+  const [loansById, counterpartyByLoan] = await Promise.all([
+    ids.length ? fetchLoansByIds(ids) : Promise.resolve(new Map<string, NcinoLoanRow>()),
+    ids.length ? fetchBorrowerRelationshipIdByLoanId(ids) : Promise.resolve(new Map<string, string>()),
+  ]);
 
   const rows: PortfolioLoanRow[] = [];
   let rowNumber = 1;
   for (const { inputRef, id } of resolved) {
     const loan = id ? (loansById.get(id) ?? loansById.get(id.slice(0, 15))) : null;
     const mambu = id ? findMambuRecord(mambuIndex, id) : undefined;
-    rows.push(buildRow(rowNumber++, inputRef, loan ?? null, mambu));
+    const counterpartyId = borrowerRelationshipIdForLoan(counterpartyByLoan, id);
+    rows.push(buildRow(rowNumber++, inputRef, loan ?? null, mambu, counterpartyId));
   }
   return rows;
 }

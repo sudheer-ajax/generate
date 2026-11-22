@@ -72,7 +72,7 @@ Unresolved inputs also go to `loan-lookup-key-batch-NNN-missing.csv`. Main CSV s
 
 ### Portfolio loan register CSV (nCino + Mambu JSONL)
 
-Combines `data/loan-ids.txt` with local Mambu Singer export `data/mambu/loan-accounts.txt` (JSON lines; uses `type: RECORD` / `stream: loan_accounts` and `custom_fields.__loancreation.n_cino__loan__object__id` to join). nCino fields come from `LLC_BI__Loan__c`; status and arrears from Mambu JSON per mapping in this README (portfolio section). Optional `BOE_CUTOFF_DATE` sets the as-of date for **Time to Maturity (Months)**.
+Combines `data/loan-ids.txt` with local Mambu Singer export `data/mambu/loan-accounts.txt` (JSON lines; uses `type: RECORD` / `stream: loan_accounts` and `custom_fields.__loancreation.n_cino__loan__object__id` to join). nCino fields come from `LLC_BI__Loan__c`; **Counterparty ID** = `Account.Relationship_ID__c` on the first `LLC_BI__Legal_Entities__c` row with borrower type **Borrower** (same as TruNarrative export); status and arrears from Mambu JSON per mapping in this README (portfolio section). Optional `BOE_CUTOFF_DATE` sets the as-of date for **Time to Maturity (Months)**.
 
 ```bash
 npm run portfolio:batch -- --list
