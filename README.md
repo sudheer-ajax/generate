@@ -74,6 +74,8 @@ Unresolved inputs also go to `loan-lookup-key-batch-NNN-missing.csv`. Main CSV s
 
 Combines `data/loan-ids.txt` with local Mambu Singer export `data/mambu/loan-accounts.txt` (JSON lines; uses `type: RECORD` / `stream: loan_accounts` and `custom_fields.__loancreation.n_cino__loan__object__id` to join). nCino fields come from `LLC_BI__Loan__c`; **Counterparty ID** = `Account.Relationship_ID__c` on the first `LLC_BI__Legal_Entities__c` row with borrower type **Borrower** (same as TruNarrative export); status and arrears from Mambu JSON per mapping in this README (portfolio section). Optional `BOE_CUTOFF_DATE` sets the as-of date for **Time to Maturity (Months)**.
 
+Fee columns: child `LLC_BI__Fee__c` records on **`LLC_BI__Loan__c`** (`LLC_BI__Fee__c.LLC_BI__Loan__c`). Each column matches `LLC_BI__Fee_Type__c` (e.g. Arrangement, Admin); amount from `LLC_BI__Amount__c` (summed if multiple rows). **Legal** uses fee types Legal or Attorney.
+
 ```bash
 npm run portfolio:batch -- --list
 npm run portfolio:batch -- 1

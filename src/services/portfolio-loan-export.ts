@@ -13,6 +13,11 @@ import {
   borrowerRelationshipIdForLoan,
   fetchBorrowerRelationshipIdByLoanId,
 } from './borrower-counterparty.js';
+import {
+  fetchLoanFeesByType,
+  PORTFOLIO_FEE_TYPE_COLUMNS,
+  portfolioFeeFieldsForLoan,
+} from './loan-fees-by-type.js';
 import { resolveLoanRef } from './loan-documents.js';
 
 const LOAN_OBJECT = 'LLC_BI__Loan__c';
@@ -92,6 +97,7 @@ const CSV_HEADERS: (keyof PortfolioLoanRow)[] = [
   'loanStatus',
   'arrearsBalance',
   'provisions',
+  ...PORTFOLIO_FEE_TYPE_COLUMNS.map((c) => c.columnKey),
   'arrangementFees',
   'csFees',
   'inputRef',
@@ -129,11 +135,27 @@ const HEADER_LABELS: Record<keyof PortfolioLoanRow, string> = {
   loanStatus: 'Loan Status',
   arrearsBalance: 'Arrears Balance',
   provisions: 'Provisions',
+  brokerFee: 'Broker Fee',
+  thirdPartyReportFee: 'Third Party Report Fee',
+  valuationFee: 'Valuation Fee',
+  otherFee: 'Other Fee',
+  productFee: 'Product Fee',
+  loanExitFee: 'Loan Exit',
+  arrangementFee: 'Arrangement',
+  fundsTransferFee: 'Funds Transfer',
+  quantitySurveyorFee: 'Quantity Surveyor',
+  tiiFee: 'TII',
+  coordinationAndStructuringFee: 'Coordination and Structuring',
+  adminFee: 'Admin',
+  earlyRepaymentChargeFee: 'Early Repayment Charge',
+  myFee: 'My Fee',
+  enhancedDiligenceFee: 'Enhanced Diligence Fee',
+  legalFee: 'Legal',
   arrangementFees: 'Arrangement Fees',
   csFees: 'C&S Fees',
   inputRef: 'inputRef',
   mambuLoanId: 'mambuLoanId',
-};
+} satisfies Record<keyof PortfolioLoanRow, string>;
 
 function escapeSoqlLiteral(value: string): string {
   return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -248,6 +270,7 @@ function buildRow(
   loan: NcinoLoanRow | null,
   mambu: MambuLoanAccountRecord | undefined,
   counterpartyId: string | null,
+  feeFields: ReturnType<typeof portfolioFeeFieldsForLoan>,
 ): PortfolioLoanRow {
   const termNcino = parseNumber(loan?.LLC_BI__Term_Months__c);
   const termMambu = parseNumber(mambu?.loanMaturity.loan_term_months);
@@ -315,8 +338,9 @@ function buildRow(
     loanStatus: mapLoanStatus(mambu, maturityParsed),
     arrearsBalance: arrearsBalance(mambu),
     provisions: null,
-    arrangementFees: null,
-    csFees: null,
+    ...feeFields,
+    arrangementFees: feeFields.arrangementFee,
+    csFees: feeFields.coordinationAndStructuringFee,
     inputRef,
     mambuLoanId: mambu?.mambuAccountId ?? null,
   };
@@ -380,9 +404,10 @@ export async function buildPortfolioRows(
   const resolved = await resolveLoanRefs(loanRefs);
 
   const ids = [...new Set(resolved.map((r) => r.id).filter(Boolean) as string[])];
-  const [loansById, counterpartyByLoan] = await Promise.all([
+  const [loansById, counterpartyByLoan, feesByLoan] = await Promise.all([
     ids.length ? fetchLoansByIds(ids) : Promise.resolve(new Map<string, NcinoLoanRow>()),
     ids.length ? fetchBorrowerRelationshipIdByLoanId(ids) : Promise.resolve(new Map<string, string>()),
+    ids.length ? fetchLoanFeesByType(ids) : Promise.resolve(new Map()),
   ]);
 
   const rows: PortfolioLoanRow[] = [];
@@ -391,7 +416,8 @@ export async function buildPortfolioRows(
     const loan = id ? (loansById.get(id) ?? loansById.get(id.slice(0, 15))) : null;
     const mambu = id ? findMambuRecord(mambuIndex, id) : undefined;
     const counterpartyId = borrowerRelationshipIdForLoan(counterpartyByLoan, id);
-    rows.push(buildRow(rowNumber++, inputRef, loan ?? null, mambu, counterpartyId));
+    const feeFields = portfolioFeeFieldsForLoan(feesByLoan, id);
+    rows.push(buildRow(rowNumber++, inputRef, loan ?? null, mambu, counterpartyId, feeFields));
   }
   return rows;
 }

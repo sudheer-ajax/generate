@@ -1,4 +1,23 @@
-export interface PortfolioLoanRow {
+export interface PortfolioFeeFields {
+  brokerFee: string | null;
+  thirdPartyReportFee: string | null;
+  valuationFee: string | null;
+  otherFee: string | null;
+  productFee: string | null;
+  loanExitFee: string | null;
+  arrangementFee: string | null;
+  fundsTransferFee: string | null;
+  quantitySurveyorFee: string | null;
+  tiiFee: string | null;
+  coordinationAndStructuringFee: string | null;
+  adminFee: string | null;
+  earlyRepaymentChargeFee: string | null;
+  myFee: string | null;
+  enhancedDiligenceFee: string | null;
+  legalFee: string | null;
+}
+
+export interface PortfolioLoanRow extends PortfolioFeeFields {
   rowNumber: number;
   loanReference: string | null;
   accountId: string | null;
@@ -31,9 +50,7 @@ export interface PortfolioLoanRow {
   provisions: string | null;
   arrangementFees: string | null;
   csFees: string | null;
-  /** Input ref from loan-ids.txt */
   inputRef: string;
-  /** Mambu loan account id when JSON matched */
   mambuLoanId: string | null;
 }
 
