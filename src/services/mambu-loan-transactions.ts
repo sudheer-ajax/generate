@@ -3,6 +3,8 @@ import { resolve } from 'path';
 
 export const MAMBU_TX_STREAM = 'loan_transactions';
 export const MAMBU_TX_FEE_APPLIED = 'FEE_APPLIED';
+export const MAMBU_TX_FEE_ADJUSTMENT = 'FEE_ADJUSTMENT';
+export const MAMBU_TX_WRITE_OFF = 'WRITE_OFF';
 export const MAMBU_FEE_MISC_NAME = 'Miscellaneous Lending Fee';
 export const MAMBU_FEE_PENALTY_NAME = 'Penalty Interest Fee';
 
@@ -14,6 +16,7 @@ interface FeeLineItem {
 interface TxRecord {
   parent_account_key?: string;
   type?: string;
+  amount?: string | number;
   fees?: FeeLineItem[];
 }
 
@@ -59,34 +62,63 @@ export function loadMambuLoanTransactionsFile(filePath: string): MambuLoanTransa
   return index;
 }
 
-function sumFeeAmounts(
-  transactions: TxRecord[],
-  transactionType: string,
-  feeName: string,
-): { total: number; found: boolean } {
+function feeLinesForName(fees: unknown, feeName: string): FeeLineItem[] {
+  if (!Array.isArray(fees)) return [];
+  return fees.filter((f) => (f as FeeLineItem).name?.trim() === feeName) as FeeLineItem[];
+}
+
+/**
+ * FEE_APPLIED fee lines for `feeName`, minus matching fee lines on FEE_ADJUSTMENT
+ * when the transaction amount is negative.
+ */
+function netFeeTotalForName(transactions: TxRecord[], feeName: string): { total: number; found: boolean } {
   let total = 0;
   let found = false;
+
   for (const tx of transactions) {
-    if (tx.type !== transactionType) continue;
-    const fees = tx.fees;
-    if (!Array.isArray(fees)) continue;
-    for (const fee of fees) {
-      if ((fee.name ?? '').trim() !== feeName) continue;
+    if (tx.type !== MAMBU_TX_FEE_APPLIED) continue;
+    for (const fee of feeLinesForName(tx.fees, feeName)) {
       total += parseNumber(fee.amount);
       found = true;
     }
   }
+
+  for (const tx of transactions) {
+    if (tx.type !== MAMBU_TX_FEE_ADJUSTMENT) continue;
+    if (parseNumber(tx.amount) >= 0) continue;
+    for (const fee of feeLinesForName(tx.fees, feeName)) {
+      total -= parseNumber(fee.amount);
+      found = true;
+    }
+  }
+
   return { total, found };
+}
+
+function sumWriteOffAmounts(transactions: TxRecord[]): { total: number; found: boolean } {
+  let total = 0;
+  let found = false;
+  for (const tx of transactions) {
+    if (tx.type !== MAMBU_TX_WRITE_OFF) continue;
+    total += parseNumber(tx.amount);
+    found = true;
+  }
+  return { total, found };
+}
+
+function formatAmountResult(result: { total: number; found: boolean }): string | null {
+  if (!result.found) return null;
+  return String(result.total);
 }
 
 export interface ClosedLoanMambuFeeTotals {
   penaltyInterestFee: string | null;
   miscellaneousFees: string | null;
+  writeOff: string | null;
 }
 
 /**
- * Sum fee line items on FEE_APPLIED transactions for a loan account (encoded_key).
- * Returns null columns when loan is not CLOSED or no parent key / no matching fees.
+ * Mambu loan_transactions for CLOSED loans only (by parent_account_key = loan encoded_key).
  */
 export function closedLoanMambuFees(
   txIndex: MambuLoanTransactionsIndex,
@@ -97,6 +129,7 @@ export function closedLoanMambuFees(
   const empty: ClosedLoanMambuFeeTotals = {
     penaltyInterestFee: null,
     miscellaneousFees: null,
+    writeOff: null,
   };
 
   const state = (accountState ?? '').trim().toUpperCase();
@@ -106,11 +139,13 @@ export function closedLoanMambuFees(
   const txs = txIndex.get(parentAccountEncodedKey) ?? [];
   if (!txs.length) return empty;
 
-  const penalty = sumFeeAmounts(txs, MAMBU_TX_FEE_APPLIED, MAMBU_FEE_PENALTY_NAME);
-  const misc = sumFeeAmounts(txs, MAMBU_TX_FEE_APPLIED, MAMBU_FEE_MISC_NAME);
+  const penalty = netFeeTotalForName(txs, MAMBU_FEE_PENALTY_NAME);
+  const misc = netFeeTotalForName(txs, MAMBU_FEE_MISC_NAME);
+  const writeOff = sumWriteOffAmounts(txs);
 
   return {
-    penaltyInterestFee: penalty.found ? String(penalty.total) : null,
-    miscellaneousFees: misc.found ? String(misc.total) : null,
+    penaltyInterestFee: formatAmountResult(penalty),
+    miscellaneousFees: formatAmountResult(misc),
+    writeOff: formatAmountResult(writeOff),
   };
 }

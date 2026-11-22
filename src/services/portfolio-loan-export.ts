@@ -107,6 +107,7 @@ const CSV_HEADERS: (keyof PortfolioLoanRow)[] = [
   'csFees',
   'penaltyInterestFee',
   'miscellaneousFees',
+  'writeOff',
   'inputRef',
   'mambuLoanId',
 ];
@@ -162,6 +163,7 @@ const HEADER_LABELS: Record<keyof PortfolioLoanRow, string> = {
   csFees: 'C&S Fees',
   penaltyInterestFee: 'Penalty Interest Fee',
   miscellaneousFees: 'Miscellaneous Fees',
+  writeOff: 'Write off',
   inputRef: 'inputRef',
   mambuLoanId: 'mambuLoanId',
 } satisfies Record<keyof PortfolioLoanRow, string>;
@@ -353,6 +355,7 @@ function buildRow(
     csFees: feeFields.coordinationAndStructuringFee,
     penaltyInterestFee: mambuTxFees.penaltyInterestFee,
     miscellaneousFees: mambuTxFees.miscellaneousFees,
+    writeOff: mambuTxFees.writeOff,
     inputRef,
     mambuLoanId: mambu?.mambuAccountId ?? null,
   };
