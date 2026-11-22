@@ -288,3 +288,22 @@ Regulatory Real Estate Exposure Flag -> <Constant to YES>
 Real Estate Category -> LLC_BI__Product__c
 Loan Status -> Json -> account_state
 Arrears Balance -> Json -> account_state == 'ACTIVE_IN_ARREARS' then interest_settings.interest_rate_source == 'FIXED_INTEREST_RATE' then return balances.interest_due else return balances.interest_due + balances.principal_due
+Broker Fee
+Third Party Report Fee
+Valuation Fee
+Other Fee
+Product Fee
+Loan Exit
+Arrangement
+Funds Transfer
+Quantity Surveyor
+TII
+Coordination and Structuring
+Admin
+Early Repayment Charge
+My Fee
+Enhanced Diligence Fee
+Legal
+
+LLC_BI__Fee_Type__c
+LC_BI__Amount__c
